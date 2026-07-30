@@ -62,23 +62,22 @@ export default function SiteIndex() {
     const e = validate();
     if (Object.keys(e).length) { setErrors(e); return; }
     const plotInfo = getPlotData(Number(form.plotId));
-    const D = "━━━━━━━━━━━━━━━━━━━━━━━━";
-    const b = "▸";
+    const D = "------------------------";
     const msg = [
-      `\u{1F3E1} *NAK ELITE ENCLAVE \u2014 PLOT ENQUIRY*`,
+      `*NAK ELITE ENCLAVE — PLOT ENQUIRY*`,
       D,
-      ` *PLOT DETAILS*`,
-      `${b} Plot No : *${String(form.plotId).padStart(2, "0")}*`,
-      plotInfo ? `${b} Block   : ${plotInfo.block}` : "",
-      plotInfo ? `${b} Status  : ${plotInfo.status}` : "",
+      `*PLOT DETAILS*`,
+      `> Plot No : *${String(form.plotId).padStart(2, "0")}*`,
+      plotInfo ? `> Block   : ${plotInfo.block}` : "",
+      plotInfo ? `> Status  : ${plotInfo.status}` : "",
       D,
-      ` *ENQUIRY BY*`,
-      `${b} Name  : *${form.name}*`,
-      `${b} Phone : *${form.phone}*`,
-      `${b} City  : ${form.city}`,
+      `*ENQUIRY BY*`,
+      `> Name  : *${form.name}*`,
+      `> Phone : *${form.phone}*`,
+      `> City  : ${form.city}`,
       D,
-      `\u{1F4CD} Matturu Road, Shivamogga`,
-      `\u{1F310} nak-elite-enclave.vercel.app`,
+      `Matturu Road, Shivamogga`,
+      `nak-elite-enclave.vercel.app`,
     ].filter(Boolean).join("\n");
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
     setShowModal(false);
