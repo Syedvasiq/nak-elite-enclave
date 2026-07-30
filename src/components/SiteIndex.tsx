@@ -69,6 +69,10 @@ export default function SiteIndex() {
       `*PLOT DETAILS*`,
       `> Plot No : *${String(form.plotId).padStart(2, "0")}*`,
       plotInfo ? `> Block   : ${plotInfo.block}` : "",
+      plotInfo ? `> Area    : ${plotInfo.sqft} sq.ft (${plotInfo.sqmt} sq.mt)` : "",
+      plotInfo ? `> Size    : E${plotInfo.east} x W${plotInfo.west} x N${plotInfo.north} x S${plotInfo.south} m` : "",
+      plotInfo ? `> Facing  : ${plotInfo.facing}` : "",
+      plotInfo ? `> Road    : ${plotInfo.road}` : "",
       plotInfo ? `> Status  : ${plotInfo.status}` : "",
       D,
       `*ENQUIRY BY*`,
@@ -118,13 +122,13 @@ export default function SiteIndex() {
           </button>
 
           <div>
-            <p className="text-[0.55rem] tracking-[0.3em] uppercase text-[#9a8a6a] mb-3 font-semibold">Legend</p>
-            <div className="flex flex-col gap-2">
+            <p className="text-xs tracking-[0.3em] uppercase text-[#9a8a6a] mb-3 font-semibold">Legend</p>
+            <div className="flex flex-col gap-3">
               {legend.map((l) => (
-                <div key={l.label} className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-sm flex-shrink-0"
+                <div key={l.label} className="flex items-center gap-3">
+                  <span className="w-4 h-4 rounded-sm flex-shrink-0"
                     style={{ backgroundColor: l.color, border: l.border ? `1px solid ${l.border}` : "none" }} />
-                  <span className="text-[0.6rem] text-[#5a4e3a]">{l.label}</span>
+                  <span className="text-sm text-[#5a4e3a] font-medium">{l.label}</span>
                 </div>
               ))}
             </div>
