@@ -128,7 +128,7 @@ export default function InvestmentPlan() {
             <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="text-xs uppercase tracking-widest text-[#8a7a5a]">Shivamogga Land Price</p>
-                <p className="font-black text-2xl text-[#1a1a1a]">₹180 → ₹2,200 <span className="text-sm font-normal text-[#C9A84C]">per sqft</span></p>
+                <p className="font-black text-2xl text-[#1a1a1a]">₹180 → ₹3,500 <span className="text-sm font-normal text-[#C9A84C]">per sqft</span></p>
               </div>
               <div className="rounded-xl border border-[#C9A84C]/40 bg-[#fffaf2] px-4 py-2 text-center">
                 <p className="text-[10px] uppercase tracking-widest text-[#8a7a5a]">15-Year Return</p>
@@ -174,7 +174,7 @@ export default function InvestmentPlan() {
             <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
                 { label: "2010 Price", value: "₹180/sqft" },
-                { label: "2025 Price", value: "₹2,200/sqft" },
+                { label: "2025 Price", value: "₹3,500/sqft" },
                 { label: "CAGR",       value: "~18% p.a." },
                 { label: "Total Growth", value: "1,122%" },
               ].map((s) => (
