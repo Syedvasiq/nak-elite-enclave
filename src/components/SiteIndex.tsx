@@ -7,7 +7,12 @@ import plotsData from "../../public/data/plots.json";
 type Plot = {
   id: number;
   block: string;
-  area: string;
+  east: number;
+  west: number;
+  north: number;
+  south: number;
+  sqmt: number;
+  sqft: number;
   facing: string;
   road: string;
   status: string;
@@ -28,9 +33,10 @@ const legend = [
 const WHATSAPP_NUMBER = "919035022229";
 
 export default function SiteIndex() {
-  const [showModal, setShowModal] = useState(false);
-  const [form, setForm] = useState({ plotId: "", name: "", phone: "", city: "" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [showModal, setShowModal]     = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [form, setForm]               = useState({ plotId: "", name: "", phone: "", city: "" });
+  const [errors, setErrors]           = useState<Record<string, string>>({});
 
   function getPlotData(id: number) {
     return plots.find((p) => p.id === id) ?? null;
@@ -39,42 +45,49 @@ export default function SiteIndex() {
   function openEnquiry() {
     setForm({ plotId: "", name: "", phone: "", city: "" });
     setErrors({});
+    setDropdownOpen(false);
     setShowModal(true);
   }
 
   function validate() {
     const e: Record<string, string> = {};
-    if (!form.plotId)                  e.plotId = "Please select a plot";
-    if (!form.name.trim())             e.name   = "Name is required";
-    if (!/^\d{10}$/.test(form.phone))  e.phone  = "Enter a valid 10-digit number";
-    if (!form.city.trim())             e.city   = "City is required";
+    if (!form.plotId)                 e.plotId = "Please select a plot";
+    if (!form.name.trim())            e.name   = "Name is required";
+    if (!/^\d{10}$/.test(form.phone)) e.phone  = "Enter a valid 10-digit number";
+    if (!form.city.trim())            e.city   = "City is required";
     return e;
   }
 
   function sendToWhatsApp() {
     const e = validate();
     if (Object.keys(e).length) { setErrors(e); return; }
-
     const plotInfo = getPlotData(Number(form.plotId));
+    const D = "━━━━━━━━━━━━━━━━━━━━━━━━";
+    const b = "▸";
     const msg = [
-      `🏡 *Plot Enquiry — NAK Developers*`,
-      ``,
-      `📌 Plot No: *${String(form.plotId).padStart(2, "0")}*`,
-      plotInfo ? `   Block: ${plotInfo.block}` : "",
-      plotInfo ? `   Area: ${plotInfo.area}` : "",
-      plotInfo ? `   Facing: ${plotInfo.facing}` : "",
-      plotInfo ? `   Road: ${plotInfo.road}` : "",
-      ``,
-      `👤 Name: *${form.name}*`,
-      `📞 Phone: *${form.phone}*`,
-      `🏙️ City: *${form.city}*`,
+      `\u{1F3E1} *NAK ELITE ENCLAVE \u2014 PLOT ENQUIRY*`,
+      D,
+      ` *PLOT DETAILS*`,
+      `${b} Plot No : *${String(form.plotId).padStart(2, "0")}*`,
+      plotInfo ? `${b} Block   : ${plotInfo.block}` : "",
+      plotInfo ? `${b} Status  : ${plotInfo.status}` : "",
+      D,
+      ` *ENQUIRY BY*`,
+      `${b} Name  : *${form.name}*`,
+      `${b} Phone : *${form.phone}*`,
+      `${b} City  : ${form.city}`,
+      D,
+      `\u{1F4CD} Matturu Road, Shivamogga`,
+      `\u{1F310} nak-elite-enclave.vercel.app`,
     ].filter(Boolean).join("\n");
-
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
     setShowModal(false);
   }
 
   const selectedPlot = form.plotId ? getPlotData(Number(form.plotId)) : null;
+  const selectedLabel = selectedPlot
+    ? `Plot ${String(selectedPlot.id).padStart(2, "0")} — ${selectedPlot.block} — ${selectedPlot.sqft} sq.ft`
+    : "";
 
   return (
     <section className="w-full bg-[#f5f0e8]">
@@ -91,7 +104,7 @@ export default function SiteIndex() {
             >
               Perfect Plot
             </h2>
-            <p className="text-xs text-[#5a4e3a] leading-relaxed">
+            <p className="text-xs text-[#5a4e3a] leading-relaxed mt-2">
               Explore the thoughtfully planned layout featuring premium residential
               plots, landscaped open spaces, and well-connected internal roads.
             </p>
@@ -119,7 +132,7 @@ export default function SiteIndex() {
           </div>
         </div>
 
-        {/* RIGHT — Image with right edge gap */}
+        {/* RIGHT — Image */}
         <div className="flex-1 flex items-center justify-end bg-[#f5f0e8] py-6 pr-5">
           <div className="relative w-full rounded-xl overflow-hidden shadow-md border border-[#e0d5c0]" style={{ aspectRatio: "1000/560" }}>
             <Image
@@ -137,7 +150,7 @@ export default function SiteIndex() {
       {/* Enquiry Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="relative w-full max-w-md bg-[#12100a] border border-[#C9A84C]/40 rounded-2xl shadow-2xl p-6">
+          <div className="relative w-full max-w-md bg-[#12100a] border border-[#C9A84C]/40 rounded-2xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
             <button onClick={() => setShowModal(false)}
               className="absolute top-4 right-4 text-white/40 hover:text-white text-lg leading-none">✕</button>
 
@@ -149,34 +162,71 @@ export default function SiteIndex() {
 
             <div className="flex flex-col gap-4">
 
-              {/* Plot dropdown */}
+              {/* Custom Plot Dropdown */}
               <div className="flex flex-col gap-1">
                 <label className="text-[0.6rem] uppercase tracking-widest text-[#C9A84C] font-semibold">Select Plot *</label>
-                <select
-                  value={form.plotId}
-                  onChange={(e) => setForm({ ...form, plotId: e.target.value })}
-                  className="w-full bg-[#1e1a10] border border-[#C9A84C]/30 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#C9A84C] appearance-none"
-                  style={{ backgroundImage: "none" }}
-                >
-                  <option value="">-- Choose a plot --</option>
-                  {plots.map((p) => (
-                    <option key={p.id} value={p.id} disabled={p.status === "Sold"}
-                      className={p.status === "Sold" ? "text-red-400" : "text-white"}>
-                      Plot {String(p.id).padStart(2, "0")} — {p.block}{p.status === "Sold" ? " (Sold)" : ""}
-                    </option>
-                  ))}
-                </select>
+
+                <div className="relative">
+                  {/* Trigger */}
+                  <button
+                    type="button"
+                    onClick={() => setDropdownOpen((o) => !o)}
+                    className="w-full bg-[#1e1a10] border border-[#C9A84C]/30 rounded-lg px-3 py-2.5 text-sm text-left flex items-center justify-between focus:outline-none focus:border-[#C9A84C]"
+                    style={{ color: form.plotId ? "#fff" : "rgba(255,255,255,0.3)" }}
+                  >
+                    <span className="truncate">{form.plotId ? selectedLabel : "-- Choose a plot --"}</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                      className={`w-4 h-4 ml-2 shrink-0 text-[#C9A84C] transition-transform ${dropdownOpen ? "rotate-180" : ""}`}>
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </button>
+
+                  {/* Options list — rendered inside modal, not OS-level */}
+                  {dropdownOpen && (
+                    <>
+                      <div className="fixed inset-0 z-40" onClick={() => setDropdownOpen(false)} />
+                      <div className="absolute left-0 right-0 top-full z-50 mt-1 overflow-y-auto rounded-lg border border-[#C9A84C]/30 bg-[#1e1a10] shadow-2xl" style={{ maxHeight: 200 }}>
+                        {plots.map((p) => (
+                          <button
+                            key={p.id}
+                            type="button"
+                            disabled={p.status === "Sold"}
+                            onClick={() => {
+                              if (p.status !== "Sold") {
+                                setForm({ ...form, plotId: String(p.id) });
+                                setDropdownOpen(false);
+                              }
+                            }}
+                            className={`w-full text-left px-3 py-2 text-sm flex items-center justify-between transition-colors ${
+                              p.status === "Sold"
+                                ? "cursor-not-allowed text-white/25"
+                                : String(p.id) === form.plotId
+                                ? "bg-[#C9A84C]/20 text-[#C9A84C]"
+                                : "text-white hover:bg-white/5"
+                            }`}
+                          >
+                            <span>Plot {String(p.id).padStart(2, "0")} — {p.block} — {p.sqft} sq.ft</span>
+                            {p.status === "Sold" && <span className="ml-2 shrink-0 text-[10px] text-red-400">Sold</span>}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+
                 {errors.plotId && <span className="text-[0.58rem] text-red-400">{errors.plotId}</span>}
+
+                {/* Plot detail pills */}
                 {selectedPlot && (
                   <div className="mt-1 flex flex-wrap gap-2">
                     <span className="rounded-full border border-[#C9A84C]/40 bg-[#1e1a10] px-3 py-1 text-[0.6rem] font-semibold text-[#C9A84C]">
-                      {selectedPlot.area}
+                      {selectedPlot.sqft} sq.ft
+                    </span>
+                    <span className="rounded-full border border-[#C9A84C]/40 bg-[#1e1a10] px-3 py-1 text-[0.6rem] font-semibold text-white/70">
+                      E{selectedPlot.east}×W{selectedPlot.west}×N{selectedPlot.north}×S{selectedPlot.south}m
                     </span>
                     <span className="rounded-full border border-[#C9A84C]/40 bg-[#1e1a10] px-3 py-1 text-[0.6rem] font-semibold text-white/70">
                       {selectedPlot.facing} Facing
-                    </span>
-                    <span className="rounded-full border border-[#C9A84C]/40 bg-[#1e1a10] px-3 py-1 text-[0.6rem] font-semibold text-white/70">
-                      {selectedPlot.road}
                     </span>
                     <span className={`rounded-full border px-3 py-1 text-[0.6rem] font-bold ${
                       selectedPlot.status === "Available"

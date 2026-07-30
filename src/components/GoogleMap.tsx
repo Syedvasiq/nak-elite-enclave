@@ -60,16 +60,18 @@ export default function GoogleMap({ active, onResults }: Props) {
       if (activeRef.current !== category || searchId !== searchIdRef.current) return;
       if (places.length === 0) { onResults([]); return; }
 
+      const filteredPlaces = category === "airport"
+        ? places.filter((p) => /(airport|aerodrome)/i.test(p.displayName || ""))
+        : places;
+
       const bounds = new window.google.maps.LatLngBounds();
       bounds.extend(nakLatLng);
       const placeResults: PlaceResult[] = [];
 
-      // Keep the current markers visible until the next response is ready, then
-      // replace them in one pass. This prevents the blank-frame marker flicker.
       activeMarkersRef.current.forEach((marker) => marker.setMap(null));
       activeMarkersRef.current = [];
 
-      places.filter((place) => place.location).forEach((place) => {
+      filteredPlaces.filter((place) => place.location).forEach((place) => {
             const loc = place.location!;
             const lat = loc.lat();
             const lng = loc.lng();
@@ -129,9 +131,14 @@ export default function GoogleMap({ active, onResults }: Props) {
         location: nakLatLng,
         radius: cat.radius,
         type: cat.placeType as google.maps.places.PlaceSearchRequest["type"],
+        ...(cat.keyword ? { keyword: cat.keyword } : {}),
       }, (results, status) => {
         if (activeRef.current !== category || searchId !== searchIdRef.current) return;
         if (status !== "OK" || !results?.length) { onResults([]); return; }
+
+        const filtered = category === "airport"
+          ? results.filter((p) => /(airport|aerodrome)/i.test(p.name || ""))
+          : results;
 
         const bounds = new window.google.maps.LatLngBounds();
         bounds.extend(nakLatLng);
@@ -139,7 +146,7 @@ export default function GoogleMap({ active, onResults }: Props) {
         activeMarkersRef.current.forEach((marker) => marker.setMap(null));
         activeMarkersRef.current = [];
 
-        results.filter((place) => place.geometry?.location).slice(0, 10).forEach((place) => {
+        filtered.filter((place) => place.geometry?.location).slice(0, 10).forEach((place) => {
           const loc = place.geometry!.location!;
           const lat = loc.lat();
           const lng = loc.lng();

@@ -34,7 +34,7 @@ export const CATEGORIES: Record<Category, CategoryDef> = {
   trainstation:  { label: "Train Station",  color: "#0f766e", icon: "/icons/train.svg",             placeType: "train_station",         radius: 10000 },
   petrolstation: { label: "Petrol Station", color: "#b45309", icon: "/icons/fuel-pump.svg",         placeType: "gas_station",           radius: 3000 },
   busstand:      { label: "Bus Stand",      color: "#6d28d9", icon: "/icons/scholar-bus-stop.svg",  placeType: "bus_station",           radius: 5000 },
-  airport:       { label: "Airport",        color: "#ea580c", icon: "/icons/plane.svg",             placeType: "airport",               radius: 60000 },
+  airport:       { label: "Airport",        color: "#ea580c", icon: "/icons/plane.svg",             placeType: "airport",               keyword: "Kuvempu Airport Shivamogga", radius: 60000 },
 };
 
 export type PlaceResult = {
