@@ -13,7 +13,7 @@ const priceData = [
   { year: "2020", price: 880,  growth: 22 },
   { year: "2022", price: 1250, growth: 42 },
   { year: "2024", price: 1800, growth: 44 },
-  { year: "2025*", price: 2200, growth: 22 },
+  { year: "2025*", price: 3500, growth: 22 },
 ];
 
 const reasons = [

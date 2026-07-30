@@ -121,7 +121,7 @@ export default function VisitUs() {
             className="flex-shrink-0 hover:scale-105 transition">
             <div className="w-16 h-16 bg-white rounded-lg p-1.5 flex items-center justify-center">
               <img
-                src="/qr-code.new.svg"
+                src="/nak-location-qr.svg"
                 alt="Scan for Google Maps location"
                 className="w-full h-full object-contain"
               />
