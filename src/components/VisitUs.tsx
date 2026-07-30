@@ -4,7 +4,7 @@ const PHONE = "9035022229";
 const PHONE_DISPLAY = "+91 9035 022 229";
 const EMAIL = "info@nakdevelopers.com";
 const ADDRESS = "N.A.K. Complex, M.K.K. Main Road,\nKarnataka 577202";
-const MAPS_URL = "https://www.google.com/maps/place/13%C2%B054'31.9%22N+75%C2%B034'43.3%22E/@13.9091051,75.5791245,19z";
+const MAPS_URL = "https://www.google.com/maps/place/13%C2%B054'31.9%22N+75%C2%B034'43.3%22E/@13.908846,75.578686,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.908846!4d75.578686";
 const WHATSAPP_URL = `https://wa.me/91${PHONE}?text=${encodeURIComponent("Hi, I'm interested in NAK Elite Enclave. Please share more details.")}`;
 
 export default function VisitUs() {
@@ -118,14 +118,14 @@ export default function VisitUs() {
         {/* QR + Scan for location */}
         <div className="flex items-center gap-4">
           <a href={MAPS_URL} target="_blank" rel="noopener noreferrer"
-            className="flex-shrink-0 w-16 h-16 bg-white rounded-lg flex items-center justify-center p-1.5 hover:scale-105 transition">
-            {/* Location QR code SVG — no white bg on the SVG itself */}
-            <img
-              src="/location-qr-code.svg"
-              alt="Scan for location"
-              className="w-full h-full"
-              style={{ background: "transparent" }}
-            />
+            className="flex-shrink-0 hover:scale-105 transition">
+            <div className="w-16 h-16 bg-white rounded-lg p-1.5 flex items-center justify-center">
+              <img
+                src="/qr-code.new.svg"
+                alt="Scan for Google Maps location"
+                className="w-full h-full object-contain"
+              />
+            </div>
           </a>
           <div>
             <p className="text-[#C9A84C] text-[0.6rem] tracking-widest uppercase font-bold mb-1">Scan for Location</p>
