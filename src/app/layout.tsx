@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     siteName: "NAK Elite Enclave",
     images: [
       {
-        url: "/hero-bg.png",
+        url: "https://nak-elite-enclave.vercel.app/hero-bg.png",
         width: 1200,
         height: 630,
         alt: "NAK Elite Enclave — Premium Plots in Shivamogga",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "NAK Elite Enclave | Premium Plots in Shivamogga",
     description: "Premium residential plots on Matturu Road, Shivamogga.",
-    images: ["/hero-bg.png"],
+    images: ["https://nak-elite-enclave.vercel.app/hero-bg.png"],
   },
   icons: {
     icon: [
