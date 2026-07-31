@@ -19,7 +19,7 @@ export default function VisitUs() {
           fill
           priority
           quality={90}
-          className="object-cover object-[70%_center] sm:object-center"
+          className="object-cover object-[90%_center] sm:object-center"
           sizes="100vw"
         />
       </div>
