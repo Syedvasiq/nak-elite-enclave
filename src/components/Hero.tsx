@@ -11,7 +11,7 @@ export default function Hero() {
           alt="NAK Developers Premium Community"
           fill
           priority
-          className="object-cover object-[60%_center] sm:object-center"
+          className="object-cover object-[20%_center] sm:object-center"
           sizes="100vw"
         />
       </div>
