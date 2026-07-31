@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="relative w-full h-[60vh] sm:min-h-screen overflow-hidden">
+    <section className="relative w-full min-h-[60vh] sm:min-h-screen overflow-hidden">
 
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
@@ -21,7 +21,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
       {/* Content — single layout for all screen sizes */}
-      <div className="relative z-20 flex flex-col justify-between h-[60vh] sm:min-h-screen px-6 py-6 sm:px-10 md:px-16 lg:px-20 max-w-xl sm:max-w-2xl">
+      <div className="relative z-20 flex flex-col justify-between min-h-[60vh] sm:min-h-screen px-6 py-6 sm:px-10 md:px-16 lg:px-20 max-w-xl sm:max-w-2xl">
 
         {/* Logo */}
         <div>

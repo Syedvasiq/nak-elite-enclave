@@ -19,7 +19,7 @@ export default function VisitUs() {
           fill
           priority
           quality={90}
-          className="object-cover object-center"
+          className="object-cover object-[70%_center] sm:object-center"
           sizes="100vw"
         />
       </div>
@@ -29,7 +29,9 @@ export default function VisitUs() {
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
       {/* Content */}
-      <div className="relative z-20 flex flex-col min-h-[500px] sm:min-h-[520px] md:min-h-[560px] px-6 py-10 sm:px-10 md:px-14 lg:px-20 max-w-lg sm:max-w-xl">
+      <div className="relative z-20 flex flex-col sm:min-h-[520px] md:min-h-[560px] px-6 py-10 sm:px-10 md:px-14 lg:px-20 max-w-lg sm:max-w-xl">
+        {/* Invisible spacer so section height = content height on mobile */}
+        <div className="sm:hidden absolute inset-0 -z-10" />
 
         {/* Eyebrow */}
         <p className="text-[0.6rem] tracking-[0.4em] uppercase font-medium text-[#C9A84C] mb-4">

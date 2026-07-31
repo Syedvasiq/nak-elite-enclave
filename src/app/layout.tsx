@@ -14,8 +14,30 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NAK Developers & Builders",
-  description: "Crafting Premium Communities — Premium Residential Layout, Shimoga",
+  title: "NAK Elite Enclave | Premium Plots in Shivamogga",
+  description: "NAK Elite Enclave — Premium residential plots on Matturu Road, Shivamogga. Gated community with landscaped parks, wide roads & modern amenities.",
+  metadataBase: new URL("https://nak-elite-enclave.vercel.app"),
+  openGraph: {
+    title: "NAK Elite Enclave | Premium Plots in Shivamogga",
+    description: "Premium residential plots on Matturu Road, Shivamogga. Gated community with landscaped parks, wide roads & modern amenities.",
+    url: "https://nak-elite-enclave.vercel.app",
+    siteName: "NAK Elite Enclave",
+    images: [
+      {
+        url: "/hero-bg.png",
+        width: 1200,
+        height: 630,
+        alt: "NAK Elite Enclave — Premium Plots in Shivamogga",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NAK Elite Enclave | Premium Plots in Shivamogga",
+    description: "Premium residential plots on Matturu Road, Shivamogga.",
+    images: ["/hero-bg.png"],
+  },
   icons: {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
